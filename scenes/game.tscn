@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bfmdr2nxpygjv"]
+[gd_scene load_steps=6 format=3 uid="uid://bfmdr2nxpygjv"]
 
 [ext_resource type="Texture2D" uid="uid://cj12egnmi5gco" path="res://assets/placeholders/Tilemap.png" id="1_3jn3n"]
 [ext_resource type="PackedScene" uid="uid://cdfwvg4r78t1a" path="res://scenes/player.tscn" id="2_mb64c"]
-[ext_resource type="PackedScene" uid="uid://cs657wp5xma8" path="res://scenes/killzone.tscn" id="3_x0w0e"]
 [ext_resource type="PackedScene" uid="uid://d4k0odip5lrax" path="res://scenes/Enemies/enemy.tscn" id="4_70sgh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eofp8"]
@@ -322,11 +321,6 @@ texture = ExtResource("1_3jn3n")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_eofp8")
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_m2ce1"]
-distance = -14.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5u2lc"]
-
 [node name="Game" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
@@ -348,30 +342,14 @@ limit_bottom = 100
 position_smoothing_enabled = true
 position_smoothing_speed = 2.0
 
-[node name="Killzone" parent="." instance=ExtResource("3_x0w0e")]
+[node name="Enemy" parent="." node_paths=PackedStringArray("patrol_points") instance=ExtResource("4_70sgh")]
+position = Vector2(112, -34)
+patrol_points = NodePath("patrol_points")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
-position = Vector2(0, 21)
-shape = SubResource("WorldBoundaryShape2D_m2ce1")
+[node name="patrol_points" type="Node2D" parent="Enemy"]
 
-[node name="end point" type="Area2D" parent="."]
-position = Vector2(216, -39)
-scale = Vector2(0.5, 0.5)
+[node name="Marker2D" type="Marker2D" parent="Enemy/patrol_points"]
+position = Vector2(-37, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="end point"]
-shape = SubResource("RectangleShape2D_5u2lc")
-
-[node name="startpoint" type="Area2D" parent="."]
-position = Vector2(72, -39)
-scale = Vector2(0.5, 0.5)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="startpoint"]
-shape = SubResource("RectangleShape2D_5u2lc")
-
-[node name="Enemy" parent="." instance=ExtResource("4_70sgh")]
-position = Vector2(137, -32)
-scale = Vector2(0.5, 0.5)
-
-[connection signal="area_shape_exited" from="end point" to="Enemy" method="_on_end_point_area_shape_exited"]
-[connection signal="body_entered" from="end point" to="Enemy" method="_on_end_point_body_entered"]
-[connection signal="body_entered" from="startpoint" to="Enemy" method="_on_startpoint_body_entered"]
+[node name="Marker2D2" type="Marker2D" parent="Enemy/patrol_points"]
+position = Vector2(82, 0)

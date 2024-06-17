@@ -139,7 +139,7 @@ radius = 216.002
 radius = 28.0
 height = 90.0
 
-[node name="Enemy" type="CharacterBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_pcg21")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -147,7 +147,6 @@ position = Vector2(0, -48)
 sprite_frames = SubResource("SpriteFrames_3glxl")
 animation = &"run"
 autoplay = "idle"
-frame_progress = 0.694222
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4, -32)
@@ -168,14 +167,8 @@ position = Vector2(0, -29)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_0c88o")
 
-[node name="Timer" type="Timer" parent="."]
-process_callback = 0
-wait_time = 0.06
-autostart = true
-
 [connection signal="body_entered" from="agro_radius" to="." method="_on_agro_radius_body_entered"]
 [connection signal="body_exited" from="agro_radius" to="." method="_on_agro_radius_body_exited"]
 [connection signal="body_entered" from="melle_raange" to="." method="_on_melle_radius_body_entered"]
 [connection signal="body_entered" from="melle_raange" to="." method="_on_agro_radius_body_entered"]
 [connection signal="body_exited" from="melle_raange" to="." method="_on_agro_radius_body_exited"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
